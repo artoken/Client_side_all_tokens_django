@@ -1,0 +1,59 @@
+
+{% extends 'base.html' %}
+
+{% block color_auction %}
+{{ style }}
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<section class="py-12" id="pages">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-12 col-md-12 mt-3 col-lg-12 col-xl-12 text-center">
+
+					<!-- Heading -->
+					<h2 class="mb-5">Активные аукционы</h2>
+					<!-- Subheading -->
+
+
+				</div>
+			<table class="table table-responsive mt-5">
+			<thead>
+				<tr>
+					<th scope="col text-center">ID токена</th>
+					<th scope="col text-center">Бенифициар</th>
+					<th scope="col text-center">Окончание аукциона</th>
+					<th scope="col text-center">Highest bidder</th>
+					<th scope="col text-center">Highest bid</th>
+					<th scope="col text-center">Начальная цена</th>
+					<th scope="col text-center">Aдрес аукциона</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for auction in info_to_render %}
+					<tr>
+					<td> {{auction.IDINTERN}} </td>
+					<td> {{auction.BNFCRY}}  </td>
+					<td> {{auction.ENDTIME}}  </td>
+					<td> {{auction.HIGHBIDDER}}  </td>
+					<td> {{auction.HIGHBID}}  </td>
+					<td> {{auction.STARTPRICE}}  </td>
+					<td> {{auction.AUCTADDR}}  </td>
+					</tr>
+					<form action="" method="POST">
+					{% csrf_token %}
+
+					{{ closeform }}
+
+					<input type="submit" name="send" value="Закрыть аукцион" class="mt-2 btn btn-primary">
+					</form>
+				{% endfor %}
+			</tbody>
+			</table>
+			</div>
+		</div>
+	</section>
+
+{% endblock%}
