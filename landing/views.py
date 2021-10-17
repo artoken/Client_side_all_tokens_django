@@ -5,26 +5,26 @@ import json
 from .forms import *
 import datetime 
 
-url = "https://data-seed-prebsc-1-s1.binance.org:8545"
-web3 = Web3(Web3.HTTPProvider(url))
+ganache_url = "http://127.0.0.1:8545"
+web3 = Web3(Web3.HTTPProvider(ganache_url))
+
+with open("config.json", "r") as read_file:
+    config = json.load(read_file)
+
 connect = web3.isConnected()
-with open('C:/Users/Administrator/Desktop/NFT_kovan/client_auctions_deploy/client/src/contracts/ART_CONTRACT.json') as f:
+with open('../Client_auctions_and_deploy/client/src/contracts/ART_CONTRACT.json') as f:
     abi = json.loads(f.read())
 
-address_token = '0x28A27786C12D801d1E70c92ab26392aDB9b85937'
-art_token = web3.eth.contract(address=address_token, abi=abi["abi"])
+art_token = web3.eth.contract(address=config["address_token"], abi=abi["abi"])
 
-with open('C:/Users/Administrator/Desktop/NFT_kovan/client_auctions_deploy/client/src/contracts/AuctionBox.json') as f:
+with open('../Client_auctions_and_deploy/client/src/contracts/AuctionBox.json') as f:
     abi = json.loads(f.read())
 
-address_box = '0xf11bB3DcE3FF244AD22969cDC03060Ac43D4600a'
-auction_box = web3.eth.contract(address=address_box, abi=abi["abi"])
-
-account_owner = "0xf0DCad9BE520765ecc6eeb0d565DED94Da7305A6"
 
 
 
-def landing(request):    
+
+def landing(request):
     tokens_in_system = art_token.functions.totalSupply().call()
     share_ids_in_system = [art_token.functions.ids_external(i).call() for i in range(tokens_in_system)]
     share_ids_in_system = list(set(share_ids_in_system))
@@ -52,13 +52,12 @@ def landing(request):
     for i in range(len(info_about_tokens)):
         part = info_about_tokens[i]
         part.append('https://ipfs.io/ipfs/'+ links_for_tokens[i])
-
     code_names = ['ID', 'Owner','Entity', 'Name', 'Author', 'License', 'Year', 'Orig', 'Extra', 'Link']
 
     info_to_render = []
     for info in info_about_tokens:
         info_to_render.append(dict(zip(code_names, info)))
 
-    style = 'color:#fff; background-color:#277cfd'
+    style = 'color:#fff; background-color:#B22222'
     return render(request, 'artproject_owner/index.html', locals())
 
