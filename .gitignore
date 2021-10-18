@@ -7,3 +7,5 @@ geckodriver.log
 .google-cookie
 .vscode
 .idea
+venv
+contracts
