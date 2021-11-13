@@ -12,7 +12,7 @@ with open("config.json", "r") as read_file:
     config = json.load(read_file)
 
 connect = web3.isConnected()
-with open("./contracts/ART_CONTRACT.json") as f:
+with open("./contracts/Diamond.json") as f:
     abi = json.loads(f.read())
 
 art_token = web3.eth.contract(address=config["address_token"], abi=abi["abi"])
@@ -22,9 +22,9 @@ with open("./contracts/AuctionBox.json") as f:
 
 
 def landing(request):
-    
+
     tokens_in_system = art_token.functions.totalSupply().call()
-    
+
     tokenIds = art_token.functions.getTokenIds().call()
     tokensInSystem = len(tokenIds)
 
