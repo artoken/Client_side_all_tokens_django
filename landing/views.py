@@ -44,5 +44,5 @@ def landing(request):
     for info in infoAboutTokens:
         info_to_render.append(dict(zip(code_names, info)))
 
-    style = 'color:#fff; background-color:#B22222'
+    style = 'color:#fff; background-color:#277cfd'
     return render(request, 'artproject_owner/index.html', locals())
